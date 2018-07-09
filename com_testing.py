@@ -72,9 +72,7 @@ def ads1262_Reg_Write(reg_adress, data):
 	#I beleive this library automatically brings CS low
 	#if this doesnt work try spi.xfer2() to keep CS low
 	wreg_address = WREG | reg_adress
-	spi.xfer([wreg_address])
-	spi.xfer([0x00]) #number to write to (this is 0 because we write to)
-	spi.xfer([data])
+	spi.xfer2([wreg_address, 0x00, data])
 
 
 def ads1262_Reset():
@@ -103,7 +101,7 @@ def ads1262_init():
 	#add another 300ms delay if this has problems
 	ads1262_Reg_Write(POWER, 0x11) 		#Set sampling rate to 125 SPS
 	sleep(.01)
-	ads1262_Reg_Write(INTERFACE, 0x05)	#Lead-off comp off, test signal disabled
+	ads1262_Reg_Write(INTERFACE, 0x00)	#Lead-off comp off, test signal disabled
 	sleep(.01)
 	ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 	sleep(.01)
@@ -164,3 +162,4 @@ while 1:
 		timend = time()
 		print 1/(timend-timestart)
 		bytesin = spi.readbytes(12)
+		print bytesin
