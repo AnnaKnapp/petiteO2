@@ -72,8 +72,8 @@ def ads1262_Reg_Write(reg_adress, data):
 	#I beleive this library automatically brings CS low
 	#if this doesnt work try spi.xfer2() to keep CS low
 	wreg_address = WREG | reg_adress
-	spi.xfer2([wreg_address, 0x00, data])
-
+	spi.xfer([wreg_address, 0x00, data])
+	sleep(.002)
 
 def ads1262_Reset():
 	GPIO.output(PWDN, 1)
@@ -101,7 +101,7 @@ def ads1262_init():
 	#add another 300ms delay if this has problems
 	ads1262_Reg_Write(POWER, 0x11) 		#Set sampling rate to 125 SPS
 	sleep(.01)
-	ads1262_Reg_Write(INTERFACE, 0x00)	#Lead-off comp off, test signal disabled
+	ads1262_Reg_Write(INTERFACE, 0x01)	#Lead-off comp off, test signal disabled
 	sleep(.01)
 	ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 	sleep(.01)
@@ -156,11 +156,11 @@ def ads1262_init():
 
 ads1262_init()
 
-readreg_intf = RREG | INTERFACE
-while 1:
-	spi.xfer2([readreg_intf, 0x00])
-	incoming_reg_bytes = spi.readbytes(2)
-	print(bin(incoming_reg_bytes))
+readreg_intf = RREG | MODE2
+#while 1:
+spi.xfer([readreg_intf, 0x00])
+incoming_reg_bytes = spi.readbytes(1)
+print(incoming_reg_bytes)
 """ 	timestart = time()
 	if GPIO.input(DRDY) == 0:
 		timend = time()
