@@ -156,10 +156,14 @@ def ads1262_init():
 
 ads1262_init()
 
+readreg_intf = RREG | INTERFACE
 while 1:
-	timestart = time()
+	spi.xfer2([readreg_intf, 0x00])
+	incoming_reg_bytes = spi.readbytes(2)
+	print(bin(incoming_reg_bytes))
+""" 	timestart = time()
 	if GPIO.input(DRDY) == 0:
 		timend = time()
 		print 1/(timend-timestart)
 		bytesin = spi.readbytes(12)
-		print bytesin
+		print bytesin """
