@@ -72,9 +72,9 @@ def ads1262_Reg_Write(reg_adress, data):
 	#I beleive this library automatically brings CS low
 	#if this doesnt work try spi.xfer2() to keep CS low
 	wreg_address = WREG | reg_adress
-	spi.xfer(wreg_address)
-	spi.xfer(0x00) #number to write to (this is 0 because we write to)
-	spi.xfer(data)
+	spi.xfer([wreg_address])
+	spi.xfer([0x00]) #number to write to (this is 0 because we write to)
+	spi.xfer([data])
 
 
 def ads1262_Reset():
