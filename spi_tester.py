@@ -89,112 +89,112 @@ GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not
 sleep(2)
 
 
-ads1262_Reg_Write(POWER, 0x11) 		#Set sampling rate to 125 SPS
-sleep(.01)
+# ads1262_Reg_Write(POWER, 0x11) 		#Set sampling rate to 125 SPS
+# sleep(.01)
 ads1262_Reg_Write(INTERFACE, 0x05)	#Lead-off comp off, test signal disabled
 sleep(.01)
-ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
-sleep(.01)
-ads1262_Reg_Write(MODE1, 0x80)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
-ads1262_Reg_Write(MODE2, 0x06)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
-ads1262_Reg_Write(INPMUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(OFCAL1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(OFCAL2, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(FSCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(FSCAL1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(FSCAL2, 0x40)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(IDACMUX, 0xBB)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(IDACMAG, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Write(REFMUX, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(TDACP, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(TDACN, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(GPIOCON, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(GPIODIR, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(GPIODAT, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2CFG, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2MUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2OFC0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2OFC1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2FSC0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Write(ADC2FSC1, 0x40)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
+# ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
+# sleep(.01)
+# ads1262_Reg_Write(MODE1, 0x80)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
+# ads1262_Reg_Write(MODE2, 0x06)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
+# ads1262_Reg_Write(INPMUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(OFCAL1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(OFCAL2, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(FSCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(FSCAL1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(FSCAL2, 0x40)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(IDACMUX, 0xBB)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(IDACMAG, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Write(REFMUX, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(TDACP, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(TDACN, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(GPIOCON, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(GPIODIR, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(GPIODAT, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2CFG, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2MUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2OFC0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2OFC1, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2FSC0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Write(ADC2FSC1, 0x40)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
 
 
-ads1262_Reg_Read(POWER) 		#Set sampling rate to 125 SPS
-sleep(.01)
+# ads1262_Reg_Read(POWER) 		#Set sampling rate to 125 SPS
+# sleep(.01)
 ads1262_Reg_Read(INTERFACE)	#Lead-off comp off, test signal disabled
 sleep(.01)
-ads1262_Reg_Read(MODE0)		#Lead-off defaults
-sleep(.01)
-ads1262_Reg_Read(MODE1)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
-ads1262_Reg_Read(MODE2)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
-ads1262_Reg_Read(INPMUX)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(OFCAL0)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(OFCAL1)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(OFCAL2)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(FSCAL0)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(FSCAL1)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(FSCAL2)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(IDACMUX)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(IDACMAG)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)  
-ads1262_Reg_Read(REFMUX)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(TDACP)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(TDACN)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(GPIOCON)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(GPIODIR)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(GPIODAT)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2CFG)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2MUX)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2OFC0)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2OFC1)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2FSC0)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)    
-ads1262_Reg_Read(ADC2FSC1)	#Ch 1 enabled, gain 6, connected to electrode in
-sleep(.01)
+# ads1262_Reg_Read(MODE0)		#Lead-off defaults
+# sleep(.01)
+# ads1262_Reg_Read(MODE1)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
+# ads1262_Reg_Read(MODE2)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
+# ads1262_Reg_Read(INPMUX)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(OFCAL0)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(OFCAL1)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(OFCAL2)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(FSCAL0)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(FSCAL1)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(FSCAL2)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(IDACMUX)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(IDACMAG)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)  
+# ads1262_Reg_Read(REFMUX)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(TDACP)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(TDACN)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(GPIOCON)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(GPIODIR)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(GPIODAT)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2CFG)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2MUX)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2OFC0)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2OFC1)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2FSC0)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)    
+# ads1262_Reg_Read(ADC2FSC1)	#Ch 1 enabled, gain 6, connected to electrode in
+# sleep(.01)
 
 
 print "finished"
