@@ -65,7 +65,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 488000
+spi.max_speed_hz = 61000
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
