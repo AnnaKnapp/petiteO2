@@ -67,6 +67,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
+spi.max_speed_hz = 1953000
 
 def ads1262_Reg_Write(reg_adress, data):
 	#I beleive this library automatically brings CS low
@@ -156,11 +157,14 @@ def ads1262_init():
 
 ads1262_init()
 
+
 readreg_intf = RREG | MODE2
-#while 1:
-spi.xfer([readreg_intf, 0x00])
-incoming_reg_bytes = spi.readbytes(1)
-print(incoming_reg_bytes)
+while 1:
+	ads1262_Reg_Write(INTERFACE, 0x05)
+	spi.xfer([readreg_intf, 0x00])
+	incoming_reg_bytes = spi.readbytes(1)
+	sleep(.001)
+	print(incoming_reg_bytes)
 """ 	timestart = time()
 	if GPIO.input(DRDY) == 0:
 		timend = time()
