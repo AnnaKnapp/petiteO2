@@ -87,7 +87,7 @@ def ads1262_Reg_Write(reg_address, data):
 def ads1262_Read_Data():
     spi.xfer2([RDATA])
     adc_data_out = spi.readbytes(6)
-    print adc_data_out
+    print(adc_data_out)
 
 
 GPIO.output(PWDN, 0) #turn it off
@@ -203,7 +203,7 @@ ads1262_Reg_Read(ADC2FSC0)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)    
 ads1262_Reg_Read(ADC2FSC1)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-print "finished"
+print("finished")
 
 sleep(1) #long nap before starting the conversion (data reading)
 
