@@ -215,6 +215,6 @@ while 1:
         datain = spi.readbytes(6)
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         print(combined_data)
-        converted_data = float combined_data*(2.5/2**31)
+        converted_data = combined_data*(2.5/2**31)
         print(converted_data)
         
