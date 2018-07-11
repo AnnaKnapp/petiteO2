@@ -214,7 +214,9 @@ while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
         for i in range(6):
-            datain[i] = datain[i].to_bytes(1, "big", signed = True)
+            print(datain[i])
+            datain[i] = datain[i].to_bytes(2, "big", signed = True)
+            print(datain[i])
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         print(combined_data)
         signed_data = int.from_bytes(combined_data_bytes,"big",signed=True)
