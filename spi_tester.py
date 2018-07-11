@@ -215,7 +215,7 @@ while 1:
         datain = spi.readbytes(6)
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         print(combined_data)
-        combined_data_bytes = combined_data.to_bytes(4, "big", signed=False)
+        combined_data_bytes = combined_data.to_bytes(4, "big", signed=True)
         print(combined_data_bytes)
         combined_data = int.from_bytes(combined_data_bytes,"big",signed=True)
         print(combined_data)
