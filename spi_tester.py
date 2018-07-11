@@ -213,14 +213,13 @@ GPIO.output(START, 1) #set start high to begin reading conversion data
 while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
+        for i in range(6):
+            datain[i] = datain[i].to_bytes(1, "big", signed = True)
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         print(combined_data)
-        combined_data_bytes = combined_data.to_bytes(4, "big", signed=True)
-        print(combined_data_bytes)
-        combined_data = int.from_bytes(combined_data_bytes,"big",signed=True)
-        print(combined_data)
-        print(type(combined_data))
-        converted_data = combined_data*(2.5/2**31)
+        signed_data = int.from_bytes(combined_data_bytes,"big",signed=True)
+        print(signed_data)
+        converted_data = signed_data*(2.5/2**31)
         print(converted_data)
 
 
