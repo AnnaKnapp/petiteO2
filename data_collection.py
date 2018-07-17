@@ -213,7 +213,7 @@ sleep(1) #long nap before starting the conversion (data reading)
 
 GPIO.output(START, 1) #set start high to begin reading conversion data
 
-datafile = open('fileName', 'w')
+datafile = open(fileName, 'w')
 startime = time()
 while 1:
     if GPIO.input(DRDY) == 0:
@@ -221,7 +221,7 @@ while 1:
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         converted_data = combined_data*(2.5/2**31)
         timeSoFar = str(time() - startime)
-        stringToWrite = timeSoFar +','+ str(converted_data)
+        stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
         print(stringToWrite)
         datafile.write(stringToWrite)
 
