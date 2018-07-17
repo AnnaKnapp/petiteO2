@@ -61,14 +61,14 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(START, GPIO.OUT) #start pin at gpio pin 4 - output
 GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
 GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
-
+ 
 
 
 #initialize spi
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 244000
+spi.max_speed_hz = 61000
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2, 0x09)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(MODE2, 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)  
