@@ -59,7 +59,7 @@ GPIO.setmode(GPIO.BCM)
 
 
 GPIO.setup(START, GPIO.OUT) #start pin at gpio pin 4 - output
-GPIO.setup(DRDY, GPIO.IN) #DRDY pin
+GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
 GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 
 
