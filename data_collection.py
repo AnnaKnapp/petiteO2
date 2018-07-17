@@ -4,7 +4,7 @@ from time import sleep
 from time import time
 import sys
 
-fileName = sys.argv[1]
+fileName = sys.argv[1] + '.txt'
 
 #define the gpio pins I will be using for communication outside of spi
 START = 4
