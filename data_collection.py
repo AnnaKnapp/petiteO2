@@ -218,13 +218,17 @@ startime = time()
 while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
+        if datain[5] != sum(readbytes[1:5])+0x9B & 255:
+            print("WRONG")
+        else:
+            print("yuo are smart")
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         converted_data = combined_data*(2.5/2**31)
-        if converted_data > 4:
-            print("oops")
+        #if converted_data > 4:
+            #print("oops")
         timeSoFar = str(time() - startime)
         stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
-        #print(stringToWrite)
+        print(stringToWrite)
         datafile.write(stringToWrite)
 
 
