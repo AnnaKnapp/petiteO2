@@ -218,10 +218,10 @@ startime = time()
 while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
-        if datain[5] != sum(readbytes[1:5])+0x9B & 255:
-            print("WRONG")
+        if datain[5] == sum(datain[1:5])+0x9B & 255:
+            print("way")
         else:
-            print("yuo are smart")
+            print("nay")
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         converted_data = combined_data*(2.5/2**31)
         #if converted_data > 4:
