@@ -40,9 +40,6 @@ N = len(volts)
 voltsFft = numpy.fft.fft(volts)
 freqs = numpy.linspace(0,1/avgTstep,N)
 
-#plt.bar(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
-#plt.show()
-
 samplingFreq = 1/avgTstep
 removedFreq60 = 59.9
 normFreq60 = removedFreq60/(samplingFreq/2)
