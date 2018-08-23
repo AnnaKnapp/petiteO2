@@ -12,24 +12,14 @@ times = []
 #volts = numpy.empty(1,dtype = numpy.float32)
 #times = numpy.empty(1,dtype = numpy.float32)
 
-with open('test_w_returnpath0.txt', newline='') as csvfile:
-    datareader = csv.reader(csvfile)
-    csv.reader
-    starttime = time.time()
-    for row in datareader:
-        timeVal = float(row[0])
-        voltVal = float(row[1])
-        times.append(timeVal)
-        volts.append(voltVal)
-    endtime = time.time()
-    print(endtime - starttime)
-print(times[0])
-print(volts[0])
-timesnp = numpy.asarray(times)
-voltsnp = numpy.asarray(volts)
-print(voltsnp[0])
-
-
+graphdata = open('test_w_returnpath0.txt', 'r').read()
+lines = graphdata.split('\n')
+starttime = time.time()
+for line in lines:
+    if len(line)>1:
+        x,y = line.split(',')
+        times.append(float(x))
+        volts.append(float(y))
 
 timestep = []
 for i in range(len(times)-1):

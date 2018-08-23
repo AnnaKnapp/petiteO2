@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 import _tkinter
 import matplotlib.animation as animation
 from matplotlib import style
+import sys
 
+style.use('fivethirtyeight')
 fileName = sys.argv[1] + '.txt'
 
-volts = []
-times = []
 #volts = numpy.empty(1,dtype = numpy.float32)
 #times = numpy.empty(1,dtype = numpy.float32)
 
@@ -25,12 +25,13 @@ def animate(i):
     xs=[]
     ys=[]
     for line in lines:
-        x,y = line.split(',')
-        xs.append(x)
-        ys.append(y)
-    # if len(xs) >= 100:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
-    #     xs = xs[-100:-1]
-    #     ys = ys[-100:-1]
+        if len(line) > 1:
+            x,y = line.split(',')
+            xs.append(x)
+            ys.append(y)
+    if len(xs) >= 100:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
+        xs = xs[-100:-1]
+        ys = ys[-100:-1]
     ax1.clear()
     ax1.plot(xs,ys)
 
