@@ -1,14 +1,13 @@
-
 import spidev
 import RPi.GPIO as GPIO
 from time import sleep
 from time import time
+import sys
 
 #define the gpio pins I will be using for communication outside of spi
 START = 4
 DRDY  = 17
 PWDN  = 27
-
 
 #define commands (calibration commands are not included at this time)
 
@@ -54,29 +53,20 @@ ADC2FSC0	= 0x19
 ADC2FSC1	= 0x1A
 
 
-GPIO.setmode(GPIO.BCM)
-
-
-GPIO.setup(START, GPIO.OUT) #start pin at gpio pin 4 - output
-GPIO.setup(DRDY, GPIO.IN) #DRDY pin
-GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
-
-
-
 #initialize spi
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
 spi.max_speed_hz = 1953000
 
-def ads1262_Reg_Write(reg_adress, data):
+def Reg_Write(reg_adress, data):
 	#I beleive this library automatically brings CS low
 	#if this doesnt work try spi.xfer2() to keep CS low
 	wreg_address = WREG | reg_adress
 	spi.xfer([wreg_address, 0x00, data])
 	sleep(.002)
 
-def ads1262_Reset():
+def Reset():
 	GPIO.output(PWDN, 1)
 	sleep(.1)
 	GPIO.output(PWDN, 0)
@@ -84,7 +74,8 @@ def ads1262_Reset():
 	GPIO.output(PWDN, 1)
 	sleep(.1)
 
-def ads1262_Hard_Stop():
+
+def Hard_Stop():
 	GPIO.output(START, 0)
 	sleep(.1)
 
@@ -93,7 +84,7 @@ def ads1262_Enable_Start():
 	GPIO.output(START, 1)
 	sleep(.02)
 
-def ads1262_init():
+def init():
 	ads1262_Reset()
 	sleep(.1)
 	ads1262_Hard_Stop()
@@ -152,21 +143,3 @@ def ads1262_init():
 	ads1262_Reg_Write(ADC2FSC1, 0x40)	#Ch 1 enabled, gain 6, connected to electrode in
 	sleep(.01)
 	ads1262_Enable_Start()
-
-
-ads1262_init()
-
-
-readreg_intf = RREG | MODE2
-while 1:
-	ads1262_Reg_Write(INTERFACE, 0x05)
-	spi.xfer([readreg_intf, 0x00])
-	incoming_reg_bytes = spi.readbytes(1)
-	sleep(.001)
-	print(incoming_reg_bytes)
-""" 	timestart = time()
-	if GPIO.input(DRDY) == 0:
-		timend = time()
-		print 1/(timend-timestart)
-		bytesin = spi.readbytes(12)
-		print bytesin """
