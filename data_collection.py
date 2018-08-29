@@ -100,7 +100,7 @@ GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not
 sleep(2)
 
 
-ads1262_Reg_Write(POWER, 0x11) 		#Set sampling rate to 125 SPS
+ads1262_Reg_Write(POWER, 0x13) 		#turn on Aincom level shift for isolated sensors. to turn off change to 0x11
 sleep(.01)
 ads1262_Reg_Write(INTERFACE, 0x05)	#Lead-off comp off, test signal disabled
 sleep(.01)
@@ -110,7 +110,7 @@ ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode 
 sleep(.01)
 ads1262_Reg_Write(MODE2,0x05<<4 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(INPMUX, 0x01)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(INPMUX, 0xa) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
 ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)  
