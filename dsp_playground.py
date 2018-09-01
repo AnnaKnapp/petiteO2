@@ -6,13 +6,15 @@ import csv
 import time
 import matplotlib.pyplot as plt
 import _tkinter
+import sys
+fileName = sys.argv[1]
 
 volts = []
 times = []
 #volts = numpy.empty(1,dtype = numpy.float32)
 #times = numpy.empty(1,dtype = numpy.float32)
 
-graphdata = open('test_w_returnpath0.txt', 'r').read()
+graphdata = open(fileName, 'r').read()
 lines = graphdata.split('\n')
 starttime = time.time()
 for line in lines:
@@ -45,21 +47,31 @@ b120, a120 = signal.iirnotch(normFreq120, 30)
 
 filteredVolts120 = signal.lfilter(b120,a120,filteredVolts60)
 
+removedFreq180 = 179.9
+normFreq180 = removedFreq180/(samplingFreq/2)
+b180, a180 = signal.iirnotch(normFreq180, 30)
 
+filteredVolts180 = signal.lfilter(b180,a180,filteredVolts120)
 
 F60voltsFft = numpy.fft.fft(filteredVolts60)
 F120voltsFft = numpy.fft.fft(filteredVolts120)
+F180voltsFft = numpy.fft.fft(filteredVolts180)
+
+
 
 
 plt.figure(1)
 plt.subplot(211)
 plt.plot(times,volts, 'r')
-plt.plot(times,filteredVolts60, 'c')
-plt.plot(times,filteredVolts120, 'k')
+plt.plot(times,filteredVolts60, 'y')
+plt.plot(times,filteredVolts120, 'g')
+plt.plot(times,filteredVolts180, 'k')
+
 
 
 plt.subplot(212)
 plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N, 'r')
-plt.plot(freqs[:N //2], numpy.abs(F60voltsFft)[:N//2]*1/N, 'c')
-plt.plot(freqs[:N //2], numpy.abs(F120voltsFft)[:N//2]*1/N, 'k')
+plt.plot(freqs[:N //2], numpy.abs(F60voltsFft)[:N//2]*1/N, 'y')
+plt.plot(freqs[:N //2], numpy.abs(F120voltsFft)[:N//2]*1/N, 'g')
+plt.plot(freqs[:N //2], numpy.abs(F180voltsFft)[:N//2]*1/N, 'k')
 plt.show()

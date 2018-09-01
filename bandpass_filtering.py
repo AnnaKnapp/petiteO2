@@ -6,13 +6,16 @@ import csv
 import time
 import matplotlib.pyplot as plt
 import _tkinter
+import sys
+fileName = sys.argv[1]
+
 
 volts = []
 times = []
 #volts = numpy.empty(1,dtype = numpy.float32)
 #times = numpy.empty(1,dtype = numpy.float32)
 
-with open('turnOnOsc.txt', newline='') as csvfile:
+with open(fileName, newline='') as csvfile:
     datareader = csv.reader(csvfile)
     csv.reader
     starttime = time.time()
@@ -39,9 +42,9 @@ freqs = numpy.linspace(0,1/avgTstep,N)
 
 samplingFreq = 1/avgTstep
 nyq = 0.5 * samplingFreq
-low = 99 / nyq
-high = 102 / nyq
-b, a = signal.butter(5, [low, high], btype='band')
+low = 92 / nyq
+high = 95 / nyq
+b, a = signal.butter(3, [low, high], btype='band')
 
 filteredVoltsBand = signal.lfilter(b,a,volts)
 
