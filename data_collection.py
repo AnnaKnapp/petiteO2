@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,0x05<<4 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(MODE2,0x00 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0xa) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
@@ -223,6 +223,8 @@ while 1:
         else:
             print("nay")
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+        if(combined_data & (1<<31)) !=0:
+            combined_data = combined_data - (1<<32)
         converted_data = combined_data*(2.5/2**31)
         #if converted_data > 4:
             #print("oops")
