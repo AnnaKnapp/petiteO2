@@ -20,17 +20,17 @@ def animate(i):
     lines = graphdata.split('\n')
     xs=[]
     ys=[]
-    for i in range(1,700):
+    for i in range(1,600):
         line = lines[i*-1]
         if len(line) > 19:
             x,y = line.split(',')
             xs.append(x)
             ys.append(y)
-    if len(xs) >= 100:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
-        xs = xs[-100:-1]
-        ys = ys[-100:-1]
+    #if len(xs) >= 1000:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
+    #    xs = xs[-1000:-1]
+    #    ys = ys[-1000:-1]
     ax1.clear()
     ax1.plot(xs,ys)
 
-ani = animation.FuncAnimation(fig, animate, interval = 1000)
+ani = animation.FuncAnimation(fig, animate, interval = 1)
 plt.show()
