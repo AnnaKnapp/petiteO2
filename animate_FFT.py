@@ -39,8 +39,8 @@ def animate(i):
     N = len(volts)
     voltsFft = numpy.fft.fft(volts)
     freqs = numpy.linspace(0,1/avgTstep,N)  
-    ax2.clear
-    ax2.plot(freqs, voltsFft)
+    ax2.clear()
+    ax2.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
 
 ani = animation.FuncAnimation(fig, animate, interval = 1)
 plt.show()
