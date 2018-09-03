@@ -23,7 +23,7 @@ def animate(i):
     times=[]
     volts=[]
     timestep =[]
-    for i in range(1,600):
+    for i in range(1,1000):
     	line = lines[i*-1]
     	if len(line) > 19:
             x,y = line.split(',')
@@ -34,11 +34,10 @@ def animate(i):
 
     for i in range(len(times)-1):
         timestep.append(float(times[i+1]) - float(times[i]))
-    avgTstep = numpy.average(timestep)
+    avgTstep = numpy.abs(numpy.average(timestep))
     N = len(volts)
-    print(N)
     voltsFft = numpy.fft.fft(volts)
-    freqs = numpy.linspace(1,1/avgTstep,N)  
+    freqs = numpy.linspace(0,1/avgTstep,N)
     ax2.clear()
     ax2.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
 
