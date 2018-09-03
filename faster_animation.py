@@ -12,22 +12,25 @@ import sys
 
 fileName = sys.argv[1] + '.txt'
 
-fig = plt.gcf()
-fig.show()
-fig.canvas.draw()
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
 
-while True:
+def animate(i):
     graphdata = open(fileName, 'r').read()
     lines = graphdata.split('\n')
     xs=[]
     ys=[]
-    for line in lines:
-        if len(line) > 1:
+    for i in range(1,700):
+        line = lines[i*-1]
+        if len(line) > 19:
             x,y = line.split(',')
             xs.append(x)
             ys.append(y)
-    if len(xs) >= 700:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
-        xs = xs[-700:-1]
-        ys = ys[-700:-1]
-    plt.plot(xs,ys)
-    fig.canvas.draw()
+    if len(xs) >= 100:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
+        xs = xs[-100:-1]
+        ys = ys[-100:-1]
+    ax1.clear()
+    ax1.plot(xs,ys)
+
+ani = animation.FuncAnimation(fig, animate, interval = 1000)
+plt.show()
