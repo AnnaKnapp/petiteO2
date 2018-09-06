@@ -215,11 +215,12 @@ GPIO.output(START, 1) #set start high to begin reading conversion data
 
 datafile = open(fileName, 'w')
 startime = time()
+errorcount=0
 while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
         if datain[5] != sum(datain[1:5])+0x9B & 255:
-            print("nay")
+            errorcount = errorcount+1
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         if(combined_data & (1<<31)) !=0:
             combined_data = combined_data - (1<<32)
@@ -228,7 +229,7 @@ while 1:
             #print("oops")
         timeSoFar = str(time() - startime)
         stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
-        #print(stringToWrite)
+        print(errorcount)
         datafile.write(stringToWrite)
 
 

@@ -218,7 +218,7 @@ startime = time()
 while 1:
     listToWrite = []
     errorCount = 0
-    for i in range(0,500)
+    for i in range(0,100):
         if GPIO.input(DRDY) == 0:
             datain = spi.readbytes(6)
             if datain[5] != sum(datain[1:5])+0x9B & 255:
@@ -228,7 +228,7 @@ while 1:
                 combined_data = combined_data - (1<<32)
             converted_data = combined_data*(2.5/2**31)
             timeSoFar = str(time() - startime)
-            stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
+            stringToWrite = timeSoFar +','+ str(converted_data)
             listToWrite.append(stringToWrite)
-        datafile.write(listToWrite)
+        datafile.write("\n".join(listToWrite))
         print(errorCount)
