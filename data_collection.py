@@ -218,9 +218,7 @@ startime = time()
 while 1:
     if GPIO.input(DRDY) == 0:
         datain = spi.readbytes(6)
-        if datain[5] == sum(datain[1:5])+0x9B & 255:
-            print("way")
-        else:
+        if datain[5] != sum(datain[1:5])+0x9B & 255:
             print("nay")
         combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
         if(combined_data & (1<<31)) !=0:
@@ -230,7 +228,7 @@ while 1:
             #print("oops")
         timeSoFar = str(time() - startime)
         stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
-        print(stringToWrite)
+        #print(stringToWrite)
         datafile.write(stringToWrite)
 
 
