@@ -14,18 +14,14 @@ volts = []
 times = []
 #volts = numpy.empty(1,dtype = numpy.float32)
 #times = numpy.empty(1,dtype = numpy.float32)
-
-with open(fileName, newline='') as csvfile:
-    datareader = csv.reader(csvfile)
-    csv.reader
-    starttime = time.time()
-    for row in datareader:
-        timeVal = float(row[0])
-        voltVal = float(row[1])
-        times.append(timeVal)
-        volts.append(voltVal)
-    endtime = time.time()
-    print(endtime - starttime)
+graphdata = open(fileName, 'r').read()
+lines = graphdata.split('\n')
+starttime = time.time()
+for line in lines:
+    if len(line)>1:
+        x,y = line.split(',')
+        times.append(float(x))
+        volts.append(float(y))
 
 #times = times[18000:25000]
 #volts = volts[18000:25000]
