@@ -228,8 +228,8 @@ while 1:
                 combined_data = combined_data - (1<<32)
             converted_data = combined_data*(2.5/2**31)
             timeSoFar = str(time() - startime)
-            stringToWrite = timeSoFar +','+ str(converted_data)
+            stringToWrite = timeSoFar +','+ str(converted_data) + '\n'
             listToWrite.append(stringToWrite)
-    bigstring = '\n'.join(listToWrite) 
-    datafile.write(bigstring)
+    for item in listToWrite:
+        datafile.write(item)
     print(errorCount)
