@@ -34,8 +34,14 @@ freqs = numpy.linspace(0,1/avgTstep,N)
 
 plt.figure(1)
 plt.subplot(211)
+plt.title('time domain')
+plt.ylabel('volts')
+plt.xlabel('seconds')
 plt.plot(times,volts)
 
+
 plt.subplot(212)
+plt.title('frequency domain')
+plt.xlabel('frequency (Hz)')
 plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
 plt.show()
