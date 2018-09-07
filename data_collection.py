@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,0x00 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(MODE2,0x00 | 0x09)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0xa) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  

@@ -68,7 +68,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 61000
+spi.max_speed_hz = 16000000
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,0x00 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(MODE2,0x00 | 0x09)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0xa) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
@@ -218,7 +218,7 @@ startime = time()
 while 1:
     listToWrite = []
     errorCount = 0
-    for i in range(0,100):
+    for i in range(0,1200):
         if GPIO.input(DRDY) == 0:
             datain = spi.readbytes(6)
             if datain[5] != sum(datain[1:5])+0x9B & 255:
@@ -230,5 +230,6 @@ while 1:
             timeSoFar = str(time() - startime)
             stringToWrite = timeSoFar +','+ str(converted_data)
             listToWrite.append(stringToWrite)
-        datafile.write("\n".join(listToWrite))
-        print(errorCount)
+    bigstring = '\n'.join(listToWrite) 
+    datafile.write(bigstring)
+    print(errorCount)
