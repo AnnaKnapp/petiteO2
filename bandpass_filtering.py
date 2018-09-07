@@ -50,9 +50,13 @@ filteredVoltsBandFft = numpy.fft.fft(filteredVoltsBand)
 
 plt.figure(1)
 plt.subplot(211)
+plt.ylabel('volts')
+plt.xlabel('seconds')
 plt.plot(times,volts)
 plt.plot(times,filteredVoltsBand, 'r')
+
 plt.subplot(212)
+plt.xlabel('frequency (Hz)')
 plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
 plt.plot(freqs[:N //2], numpy.abs(filteredVoltsBandFft)[:N//2]*1/N)
 plt.show()

@@ -58,10 +58,10 @@ F120voltsFft = numpy.fft.fft(filteredVolts120)
 F180voltsFft = numpy.fft.fft(filteredVolts180)
 
 
-
-
 plt.figure(1)
 plt.subplot(211)
+plt.ylabel('volts')
+plt.xlabel('seconds')
 plt.plot(times,volts, 'r')
 plt.plot(times,filteredVolts60, 'y')
 plt.plot(times,filteredVolts120, 'g')
@@ -70,6 +70,7 @@ plt.plot(times,filteredVolts180, 'k')
 
 
 plt.subplot(212)
+plt.xlabel('frequency (Hz)')
 plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N, 'r')
 plt.plot(freqs[:N //2], numpy.abs(F60voltsFft)[:N//2]*1/N, 'y')
 plt.plot(freqs[:N //2], numpy.abs(F120voltsFft)[:N//2]*1/N, 'g')
