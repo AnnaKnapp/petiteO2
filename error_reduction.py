@@ -100,7 +100,7 @@ GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not
 sleep(2)
 
 
-ads1262_Reg_Write(POWER, 0x13) 		#turn on Aincom level shift for isolated sensors. to turn off change to 0x11
+ads1262_Reg_Write(POWER, 0x11) 		#turn on Aincom level shift for isolated sensors. to turn off change to 0x11
 sleep(.01)
 ads1262_Reg_Write(INTERFACE, 0x05)	#Lead-off comp off, test signal disabled
 sleep(.01)
