@@ -28,9 +28,9 @@ def animate(i):
             x,y = line.split(',')
             xs.append(x)
             ys.append(y)
-    if len(xs) >= 100:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
-        xs = xs[-100:-1]
-        ys = ys[-100:-1]
+    if len(xs) >= 1000:    #uncomment these 3 lines to have the graph move and only show 100 pts at a time
+        xs = xs[-1000:-1]
+        ys = ys[-1000:-1]
     ax1.clear()
     ax1.plot(xs,ys)
 

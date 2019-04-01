@@ -31,8 +31,8 @@ POWER		= 0x01
 INTERFACE	= 0x02
 MODE0		= 0x03
 MODE1		= 0x04
-MODE2		= 0x05
-INPMUX		= 0x06
+MODE2		= 0x8A #sets PGA and datarate
+INPMUX		= 0x01 #this sets the inputs - a value of 01 means that +input is Ain0 and -input is Ain1. for other configurations see datasheet
 OFCAL0		= 0x07
 OFCAL1		= 0x08
 OFCAL2		= 0x09
@@ -68,7 +68,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 61000
+spi.max_speed_hz = 1400000000/1024  #this can be any of the following - 
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
