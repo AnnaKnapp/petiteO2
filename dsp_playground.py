@@ -53,16 +53,16 @@ b180, a180 = signal.iirnotch(normFreq180, 30)
 
 filteredVolts180 = signal.lfilter(b180,a180,filteredVolts120)
 
-removedFreq240 = 239.8
-normFreq240 = removedFreq240/(samplingFreq/2)
-b240, a240 = signal.iirnotch(normFreq240, 30)
+#removedFreq240 = 239.8
+#normFreq240 = removedFreq240/(samplingFreq/2)
+#b240, a240 = signal.iirnotch(normFreq240, 30)
 
-filteredVolts240= signal.lfilter(b240,a240,filteredVolts180)
+#filteredVolts240= signal.lfilter(b240,a240,filteredVolts180)
 
 F60voltsFft = numpy.fft.fft(filteredVolts60)
 F120voltsFft = numpy.fft.fft(filteredVolts120)
 F180voltsFft = numpy.fft.fft(filteredVolts180)
-F240voltsFft = numpy.fft.fft(filteredVolts240)
+#F240voltsFft = numpy.fft.fft(filteredVolts240)
 
 
 plt.figure(1)
@@ -73,7 +73,7 @@ plt.plot(times,volts, 'r')
 plt.plot(times,filteredVolts60, 'y')
 plt.plot(times,filteredVolts120, 'g')
 plt.plot(times,filteredVolts180, 'b')
-plt.plot(times,filteredVolts180, 'k')
+#plt.plot(times,filteredVolts240, 'k')
 
 
 plt.subplot(212)
@@ -82,5 +82,5 @@ plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N, 'r')
 plt.plot(freqs[:N //2], numpy.abs(F60voltsFft)[:N//2]*1/N, 'y')
 plt.plot(freqs[:N //2], numpy.abs(F120voltsFft)[:N//2]*1/N, 'g')
 plt.plot(freqs[:N //2], numpy.abs(F180voltsFft)[:N//2]*1/N, 'b')
-plt.plot(freqs[:N //2], numpy.abs(F240voltsFft)[:N//2]*1/N, 'k')
+#plt.plot(freqs[:N //2], numpy.abs(F240voltsFft)[:N//2]*1/N, 'k')
 plt.show()

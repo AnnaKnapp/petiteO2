@@ -31,8 +31,8 @@ POWER		= 0x01
 INTERFACE	= 0x02
 MODE0		= 0x03
 MODE1		= 0x04
-MODE2		= 0x8A #sets PGA and datarate
-INPMUX		= 0x01 #this sets the inputs - a value of 01 means that +input is Ain0 and -input is Ain1. for other configurations see datasheet
+MODE2		= 0x05 #sets PGA and datarate
+INPMUX		= 0x06 #this sets the inputs - a value of 01 means that +input is Ain0 and -input is Ain1. for other configurations see datasheet
 OFCAL0		= 0x07
 OFCAL1		= 0x08
 OFCAL2		= 0x09
@@ -108,9 +108,9 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,0x00 | 0x09)	#Ch 1 enabled, gain 6, connected to electrode in
+ads1262_Reg_Write(MODE2,0x00 | 0x08)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(INPMUX, 0xa) #Ain0 is + input and Aincom is - input. to change please see datasheet
+ads1262_Reg_Write(INPMUX, 0x1) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
 ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)  
