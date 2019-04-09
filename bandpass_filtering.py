@@ -38,8 +38,8 @@ freqs = numpy.linspace(0,1/avgTstep,N)
 
 samplingFreq = 1/avgTstep
 nyq = 0.5 * samplingFreq
-low = 92 / nyq
-high = 95 / nyq
+low = 13 / nyq
+high = 13.9 / nyq
 b, a = signal.butter(3, [low, high], btype='band')
 
 filteredVoltsBand = signal.lfilter(b,a,volts)
