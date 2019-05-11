@@ -100,7 +100,7 @@ GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not
 sleep(2)
 
 
-ads1262_Reg_Write(POWER, 0x13) 		#turn on Aincom level shift for isolated sensors. to turn off change to 0x11
+ads1262_Reg_Write(POWER, 0x01) 		#turn on Aincom level shift for isolated sensors. to turn off change to 0x01
 sleep(.01)
 ads1262_Reg_Write(INTERFACE, 0x05)	#Lead-off comp off, test signal disabled
 sleep(.01)
@@ -108,9 +108,9 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,0x00 | 0x38) #sets PGA and datarate
+ads1262_Reg_Write(MODE2,  0x28) #sets PGA and datarate
 sleep(.01)
-ads1262_Reg_Write(INPMUX, 0x1) #Ain0 is + input and Aincom is - input. to change please see datasheet
+ads1262_Reg_Write(INPMUX, 0x01) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
 ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)  
