@@ -7,7 +7,7 @@ import sys
 fileName = sys.argv[1] + '.txt'
 
 #define the gpio pins I will be using for communication outside of spi
-START = 4
+STRT = 26
 DRDY  = 17
 PWDN  = 27
 
@@ -58,7 +58,7 @@ ADC2FSC1	= 0x1A
 GPIO.setmode(GPIO.BCM)
 
 
-GPIO.setup(START, GPIO.OUT) #start pin at gpio pin 4 - output
+GPIO.setup(STRT, GPIO.OUT) #start pin at gpio pin 4 - output
 GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
 GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
  
@@ -96,7 +96,7 @@ def ads1262_Read_Data():
 GPIO.output(PWDN, 0) #turn it off
 sleep(.5) #let it have a nap
 GPIO.output(PWDN, 1) #turn it on
-GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not pulse
+GPIO.output(STRT, 0) #Set start low so conversions do not run and DRDY does not pulse
 sleep(2)
 
 
@@ -211,35 +211,38 @@ print("finished")
 sleep(1) #long nap before starting the conversion (data reading)
 
 
-GPIO.output(START, 1) #set start high to begin reading conversion data
+#set start high to begin reading conversion data
 
 datafile = open(fileName, 'w')
 startime = time()
 errorcount=0
 while 1:
-    if GPIO.input(DRDY) == 0:
-        datain = spi.readbytes(6)
-        if datain[5] != sum(datain[1:5])+0x9B & 255:
-            print("ERRO2")
-        combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
-        if(combined_data & (1<<31)) !=0:
-            combined_data = combined_data - (1<<32)
-        O2_data = combined_data*(2.5/2**31)
-        GPIO.output(START, 0)
-        ads1262_Reg_Write(INPMUX, 0x89) #change to thermocouple input (Ain8 + and Ain9 -)
-        GPIO.output(START, 1)
-        if GPIO.input(DRDY) == 0:
-            datain = spi.readbytes(6)
-            if datain[5] != sum(datain[1:5])+0x9B & 255:
-                print("ERRTMP")
-            combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
-            if(combined_data & (1<<31)) !=0:
-                combined_data = combined_data - (1<<32)
-            temp_data = combined_data*(2.5/2**31)
-            celsius = (temp_data-1.25)/.005
-            timeSoFar = str(time() - startime)
-            stringToWrite = timeSoFar +','+ str(O2_data) + ',' + str(celsius) + '\n'
-            ads1262_Reg_Write(INPMUX, 0x01) #switch back to O2 sensor inputs (Ain0 and Ain1)
+    GPIO.output(STRT, 1)
+    incoming = GPIO.wait_for_edge(DRDY, GPIO.FALLING, timeout=100)
+    datain = spi.readbytes(6)
+    GPIO.output(STRT, 0)
+    ads1262_Reg_Write(INPMUX, 0x89) #change to thermocouple input (Ain8 + and Ain9 -)
+    if datain[5] != sum(datain[1:5])+0x9B & 255:
+        print("ERRO2")
+    combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+    if(combined_data & (1<<31)) !=0:
+        combined_data = combined_data - (1<<32)
+    O2_data = combined_data*(2.5/2**31)
+    GPIO.output(STRT, 1)
+    GPIO.wait_for_edge(DRDY, GPIO.FALLING)
+    datain = spi.readbytes(6)
+    GPIO.output(STRT, 0)
+    ads1262_Reg_Write(INPMUX, 0x01) #switch back to O2 sensor inputs (Ain0 and Ain1)
+    if datain[5] != sum(datain[1:5])+0x9B & 255:
+        print("ERRTMP")
+    combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+    if(combined_data & (1<<31)) !=0:
+        combined_data = combined_data - (1<<32)
+    temp_data = combined_data*(2.5/2**31)+2.5
+    celsius = (temp_data-1.25)/.005
+    timeSoFar = str(time() - startime)
+    stringToWrite = timeSoFar +','+ str(O2_data) + ',' + str(celsius) + '\n'
+    datafile.write(stringToWrite)
 
 
 

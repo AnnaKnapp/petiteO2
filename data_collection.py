@@ -7,7 +7,7 @@ import sys
 fileName = sys.argv[1] + '.txt'
 
 #define the gpio pins I will be using for communication outside of spi
-START = 4
+STRT = 26
 DRDY  = 17
 PWDN  = 27
 
@@ -58,7 +58,7 @@ ADC2FSC1	= 0x1A
 GPIO.setmode(GPIO.BCM)
 
 
-GPIO.setup(START, GPIO.OUT) #start pin at gpio pin 4 - output
+GPIO.setup(STRT, GPIO.OUT) #start pin at gpio pin 4 - output
 GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
 GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
  
@@ -96,7 +96,7 @@ def ads1262_Read_Data():
 GPIO.output(PWDN, 0) #turn it off
 sleep(.5) #let it have a nap
 GPIO.output(PWDN, 1) #turn it on
-GPIO.output(START, 0) #Set start low so conversions do not run and DRDY does not pulse
+GPIO.output(STRT, 0) #Set start low so conversions do not run and DRDY does not pulse
 sleep(2)
 
 
@@ -108,9 +108,9 @@ ads1262_Reg_Write(MODE0, 0x00)		#Lead-off defaults
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,  0x28) #sets PGA and datarate
+ads1262_Reg_Write(MODE2,  0x08) #sets PGA and datarate
 sleep(.01)
-ads1262_Reg_Write(INPMUX, 0x01) #Ain0 is + input and Aincom is - input. to change please see datasheet
+ads1262_Reg_Write(INPMUX, 0x89) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
 ads1262_Reg_Write(OFCAL0, 0x00)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)  
@@ -211,7 +211,7 @@ print("finished")
 sleep(1) #long nap before starting the conversion (data reading)
 
 
-GPIO.output(START, 1) #set start high to begin reading conversion data
+GPIO.output(STRT, 1) #set start high to begin reading conversion data
 
 datafile = open(fileName, 'w')
 startime = time()
