@@ -35,7 +35,7 @@ freqs = numpy.linspace(0,1/avgTstep,N)
 samplingFreq = 1/avgTstep
 removedFreq60 = 59.9
 normFreq60 = removedFreq60/(samplingFreq/2)
-b60, a60 = signal.iirnotch(normFreq60, 30)
+b60, a60 = signal.iirnotch(normFreq60, 1)
 
 filteredVolts60 = signal.lfilter(b60,a60,volts)
 
@@ -43,13 +43,13 @@ filteredVolts60 = signal.lfilter(b60,a60,volts)
 
 removedFreq120 = 119.9
 normFreq120 = removedFreq120/(samplingFreq/2)
-b120, a120 = signal.iirnotch(normFreq120, 30)
+b120, a120 = signal.iirnotch(normFreq120, 1)
 
 filteredVolts120 = signal.lfilter(b120,a120,filteredVolts60)
 
 removedFreq180 = 179.9
 normFreq180 = removedFreq180/(samplingFreq/2)
-b180, a180 = signal.iirnotch(normFreq180, 30)
+b180, a180 = signal.iirnotch(normFreq180, 1)
 
 filteredVolts180 = signal.lfilter(b180,a180,filteredVolts120)
 
