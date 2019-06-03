@@ -68,7 +68,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 1400000000/1024  #this can be any of the following - 
+spi.max_speed_hz = 1400000000/256  #this can be any of the following - 
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x40)		#0x40 for pulse conversion 0x00 for continuous
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,  0x08) #sets PGA and datarate
+ads1262_Reg_Write(MODE2,  0x09) #sets PGA and datarate
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0x01) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
