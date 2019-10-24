@@ -68,7 +68,7 @@ GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
 spi = spidev.SpiDev()
 spi.open(0,0) # (bus, device)??
 spi.mode = 0b01
-spi.max_speed_hz = 1400000000/256  #this can be any of the following - 
+spi.max_speed_hz = 1400000000/2048  #this can be any of the following - 
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
@@ -108,7 +108,7 @@ ads1262_Reg_Write(MODE0, 0x40)		#0x40 for pulse conversion 0x00 for continuous
 sleep(.01)
 ads1262_Reg_Write(MODE1, 0x03<<5)	#Ch 1 enabled, gain 6, connected to electrode in
 sleep(.01)
-ads1262_Reg_Write(MODE2,  0x09) #sets PGA and datarate
+ads1262_Reg_Write(MODE2,  0x4A) #sets PGA and datarate
 sleep(.01)
 ads1262_Reg_Write(INPMUX, 0x01) #Ain0 is + input and Aincom is - input. to change please see datasheet
 sleep(.01)  
@@ -227,6 +227,7 @@ while 1:
     combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
     if(combined_data & (1<<31)) !=0:
         combined_data = combined_data - (1<<32)
+    ads1262_Reg_Write(MODE2,  0x09)
     O2_data = combined_data*(2.5/2**31)
     GPIO.output(STRT, 1)
     GPIO.wait_for_edge(DRDY, GPIO.FALLING)
@@ -238,6 +239,7 @@ while 1:
     combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
     if(combined_data & (1<<31)) !=0:
         combined_data = combined_data - (1<<32)
+    ads1262_Reg_Write(MODE2,  0x49)
     temp_data = combined_data*(2.5/2**31)+2.5
     celsius = (temp_data-1.25)/.005
     timeSoFar = str(time() - startime)

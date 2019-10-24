@@ -35,7 +35,7 @@ avgTstep = numpy.average(timestep)
 N = len(volts)
 voltsFft = numpy.fft.fft(volts)
 freqs = numpy.linspace(0,1/avgTstep,N)
-
+voltsFft = numpy.fft.fft(volts)
 
 samplingFreq = 1/avgTstep
 print(samplingFreq)
@@ -49,13 +49,18 @@ filteredVoltsBandFft = numpy.fft.fft(filteredVoltsBand)
 
 
 plt.figure(1)
-plt.subplot(211)
+plt.subplot(311)
 plt.ylabel('volts')
 plt.xlabel('seconds')
 plt.plot(times,volts, 'r')
 plt.plot(times,filteredVoltsBand, 'b')
 
-plt.subplot(212)
+plt.subplot(312)
+plt.ylabel('volts')
+plt.xlabel('seconds')
+plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N)
+
+plt.subplot(313)
 plt.ylabel('Temp in degrees C')
 plt.xlabel('seconds')
 plt.plot(times, tempC, 'r')

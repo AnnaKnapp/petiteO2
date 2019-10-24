@@ -46,6 +46,16 @@ ADC2OFC1	= 0x18
 ADC2FSC0	= 0x19
 ADC2FSC1	= 0x1A
 
+spi = spidev.SpiDev()
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(STRT, GPIO.OUT) #start pin at gpio pin 4 - output
+GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
+GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
+spi.open(spiBus,0) # (bus, device)??
+spi.mode = 0b01
+spi.max_speed_hz = 1400000000/clockDiv
+
 
 def ads1262_Reg_Read(reg_address):
     rreg_address = RREG | reg_address
@@ -74,7 +84,6 @@ def init_GPIO_SPI():
     GPIO.setup(STRT, GPIO.OUT) #start pin at gpio pin 4 - output
     GPIO.setup(DRDY, GPIO.IN, pull_up_down = GPIO.PUD_UP) #DRDY pin
     GPIO.setup(PWDN, GPIO.OUT) #PWDN pin
-    spi = spidev.SpiDev()
     spi.open(spiBus,0) # (bus, device)??
     spi.mode = 0b01
     spi.max_speed_hz = 1400000000/clockDiv  #this can be any of the following - 

@@ -1,0 +1,86 @@
+import numpy
+import scipy
+from scipy import signal
+import matplotlib as mpl
+import csv
+import time
+import matplotlib.pyplot as plt
+import _tkinter
+import sys
+fileName = sys.argv[1]
+
+volts = []
+times = []
+#volts = numpy.empty(1,dtype = numpy.float32)
+#times = numpy.empty(1,dtype = numpy.float32)
+
+graphdata = open(fileName, 'r').read()
+lines = graphdata.split('\n')
+starttime = time.time()
+for line in lines:
+    if len(line)>1:
+        x,y = line.split(',')
+        times.append(float(x))
+        volts.append(float(y))
+
+timestep = []
+for i in range(len(times)-1):
+    timestep.append(times[i+1] - times[i])
+avgTstep = numpy.average(timestep)
+print(avgTstep)
+N = len(volts)
+voltsFft = numpy.fft.fft(volts)
+freqs = numpy.linspace(0,1/avgTstep,N)
+
+samplingFreq = 1/avgTstep
+removedFreq60 = 59.9
+normFreq60 = removedFreq60/(samplingFreq/2)
+b60, a60 = signal.iirnotch(normFreq60, 1)
+
+filteredVolts60 = signal.lfilter(b60,a60,volts)
+
+
+
+removedFreq120 = 119.9
+normFreq120 = removedFreq120/(samplingFreq/2)
+b120, a120 = signal.iirnotch(normFreq120, 1)
+
+filteredVolts120 = signal.lfilter(b120,a120,filteredVolts60)
+
+removedFreq180 = 179.9
+normFreq180 = removedFreq180/(samplingFreq/2)
+b180, a180 = signal.iirnotch(normFreq180, 1)
+
+filteredVolts180 = signal.lfilter(b180,a180,filteredVolts120)
+
+#removedFreq240 = 239.8
+#normFreq240 = removedFreq240/(samplingFreq/2)
+#b240, a240 = signal.iirnotch(normFreq240, 30)
+
+#filteredVolts240= signal.lfilter(b240,a240,filteredVolts180)
+
+F60voltsFft = numpy.fft.fft(filteredVolts60)
+F120voltsFft = numpy.fft.fft(filteredVolts120)
+F180voltsFft = numpy.fft.fft(filteredVolts180)
+#F240voltsFft = numpy.fft.fft(filteredVolts240)
+
+
+plt.figure(1)
+plt.subplot(211)
+plt.ylabel('volts')
+plt.xlabel('seconds')
+plt.plot(times,volts, 'r')
+plt.plot(times,filteredVolts60, 'y')
+plt.plot(times,filteredVolts120, 'g')
+plt.plot(times,filteredVolts180, 'b')
+#plt.plot(times,filteredVolts240, 'k')
+
+
+plt.subplot(212)
+plt.xlabel('frequency (Hz)')
+plt.plot(freqs[:N //2], numpy.abs(voltsFft)[:N//2]*1/N, 'r')
+plt.plot(freqs[:N //2], numpy.abs(F60voltsFft)[:N//2]*1/N, 'y')
+plt.plot(freqs[:N //2], numpy.abs(F120voltsFft)[:N//2]*1/N, 'g')
+plt.plot(freqs[:N //2], numpy.abs(F180voltsFft)[:N//2]*1/N, 'b')
+#plt.plot(freqs[:N //2], numpy.abs(F240voltsFft)[:N//2]*1/N, 'k')
+plt.show()
