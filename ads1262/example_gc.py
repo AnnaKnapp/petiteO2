@@ -5,11 +5,20 @@ from time import time
 import sys
 import ads1262_module as adc
 import os
+import signal
+import gc
 
-os.nice(-15)
+os.nice(-15) #this prioritizes this over other programs currently running on your pi 
+gc.disable() #improves timing
+
+def signal_handler(signal, frame):
+    global interrupted
+    interrupted = True
+
+signal.signal(signal.SIGINT, signal_handler)
+
 
 spi = spidev.SpiDev()
-
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(adc.STRT, GPIO.OUT) #start pin at gpio pin 4 - output
@@ -36,21 +45,26 @@ GPIO.output(adc.STRT, 1)
 datafile = open(fileName, 'w')
 startime = time()
 errorcount=0
+
+interrupted = False
 while 1:
     incoming = GPIO.wait_for_edge(adc.DRDY, GPIO.FALLING, timeout=100)
     datain = spi.readbytes(6)
     GPIO.output(13, 1)
     if datain[5] != sum(datain[1:5])+0x9B & 255:
         print("ERR - checksum failed")
-    else:
-        combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
-        if(combined_data & (1<<31)) !=0:
-            combined_data = combined_data - (1<<32)
-        O2_data = combined_data*(2.5/2**31)
-        timeSoFar = str(time() - startime)
-        stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
-        datafile.write(stringToWrite)
+    combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+    if(combined_data & (1<<31)) !=0:
+        combined_data = combined_data - (1<<32)
+    O2_data = combined_data*(2.5/2**31)
+    timeSoFar = str(time() - startime)
+    stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
+    datafile.write(stringToWrite)
     GPIO.output(13, 0)
-    
+
+    if interrupted:
+        gc.collect()
+        print('interrupted')
+        exit()
 
 

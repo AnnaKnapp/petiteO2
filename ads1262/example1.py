@@ -38,19 +38,21 @@ startime = time()
 errorcount=0
 while 1:
     incoming = GPIO.wait_for_edge(adc.DRDY, GPIO.FALLING, timeout=100)
-    datain = spi.readbytes(6)
-    GPIO.output(13, 1)
-    if datain[5] != sum(datain[1:5])+0x9B & 255:
-        print("ERR - checksum failed")
-    else:
-        combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
-        if(combined_data & (1<<31)) !=0:
-            combined_data = combined_data - (1<<32)
-        O2_data = combined_data*(2.5/2**31)
-        timeSoFar = str(time() - startime)
-        stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
-        datafile.write(stringToWrite)
-    GPIO.output(13, 0)
+        if incoming is None:
+            print(timeout)
+        else:
+            datain = spi.readbytes(6)
+            GPIO.output(13, 1)
+            if datain[5] != sum(datain[1:5])+0x9B & 255:
+                print("ERR - checksum failed")
+            combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+            if(combined_data & (1<<31)) !=0:
+                combined_data = combined_data - (1<<32)
+            O2_data = combined_data*(2.5/2**31)
+            timeSoFar = str(time() - startime)
+            stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
+            datafile.write(stringToWrite)
+            GPIO.output(13, 0)
     
 
 
