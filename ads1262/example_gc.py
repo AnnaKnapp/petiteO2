@@ -8,7 +8,7 @@ import os
 import signal
 import gc
 
-os.nice(-15) #this prioritizes this over other programs currently running on your pi 
+os.nice(-20) #this prioritizes this over other programs currently running on your pi 
 gc.disable() #improves timing
 
 def signal_handler(signal, frame):
@@ -50,17 +50,18 @@ interrupted = False
 while 1:
     incoming = GPIO.wait_for_edge(adc.DRDY, GPIO.FALLING, timeout=100)
     datain = spi.readbytes(6)
-    GPIO.output(13, 1)
+    #GPIO.output(13, 1)
     if datain[5] != sum(datain[1:5])+0x9B & 255:
         print("ERR - checksum failed")
-    combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
-    if(combined_data & (1<<31)) !=0:
-        combined_data = combined_data - (1<<32)
-    O2_data = combined_data*(2.5/2**31)
-    timeSoFar = str(time() - startime)
-    stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
-    datafile.write(stringToWrite)
-    GPIO.output(13, 0)
+    else:
+        combined_data = datain[1] << 24 | datain[2] << 16 | datain[3] << 8 | datain[4]
+        if(combined_data & (1<<31)) !=0:
+            combined_data = combined_data - (1<<32)
+        O2_data = combined_data*(2.5/2**31)
+        timeSoFar = str(time() - startime)
+        stringToWrite = timeSoFar +','+ str(O2_data) + '\n'
+        datafile.write(stringToWrite)
+        #GPIO.output(13, 0)
 
     if interrupted:
         gc.collect()
