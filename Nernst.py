@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 #define the constants
 kB = np.float64(1.38e-23) #Boltzman Constant
@@ -17,10 +18,3 @@ dV3 = (kB*tempK2)/(4*e0) * (np.log(c1/c3))
 dV4 = np.float64(-.0045)
 tK = ((dV4/np.log(20/25))*4*e0)/kB
 
-print(tK)
-print("change in voltage of 1ppm O2 at 600C ")
-print(dV1)
-print("change in voltage of 1ppm O2 at 601C ")
-print(dV2)
-print("change in voltage of 2ppm O2 at 600C ")
-print(dV3)

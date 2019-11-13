@@ -1,3 +1,4 @@
+import pyqtgraph as pg
 import numpy as np
 import scipy
 from scipy import signal
@@ -59,23 +60,4 @@ filteredVoltsBandFft = np.fft.fft(filteredVoltsBand)
 multFft = np.fft.fft(multiplied)
 finalFFt = np.fft.fft(finalout)
 
-
-
-
-plt.figure(1)
-plt.subplot(211)
-plt.ylabel('volts')
-plt.xlabel('seconds')
-plt.plot(times,volts)
-plt.plot(times,filteredVoltsBand, 'r')
-plt.plot(times,multiplied, 'k')
-plt.plot(times, finalout, 'm')
-plt.plot(times, lowpassOnly, 'c')
-
-plt.subplot(212)
-plt.xlabel('frequency (Hz)')
-plt.plot(freqs[:N //2], np.abs(voltsFft)[:N//2]*1/N)
-plt.plot(freqs[:N //2], np.abs(filteredVoltsBandFft)[:N//2]*1/N)
-plt.plot(freqs[:N //2], np.abs(multFft)[:N//2]*1/N, 'k')
-plt.plot(freqs[:N //2], np.abs(finalFFt)[:N//2]*1/N, 'm')
-plt.show()
+pg.plot(times, volts, pen=, symbol=None)
